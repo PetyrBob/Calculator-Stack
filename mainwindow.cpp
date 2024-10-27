@@ -8,7 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Connect digit buttons to the addDigit function
     connect(ui->point, &QPushButton::clicked, this, [=]() { addDigit('.'); });
     connect(ui->zero, &QPushButton::clicked, this, [=]() { addDigit(0); });
     connect(ui->one, &QPushButton::clicked, this, [=]() { addDigit(1); });
@@ -21,13 +20,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->eight, &QPushButton::clicked, this, [=]() { addDigit(8); });
     connect(ui->nine, &QPushButton::clicked, this, [=]() { addDigit(9); });
 
-    // Connect operator buttons to the addOperator function
     connect(ui->add, &QPushButton::clicked, this, [=]() { addOperator('+'); });
     connect(ui->minus, &QPushButton::clicked, this, [=]() { addOperator('-'); });
     connect(ui->multiply, &QPushButton::clicked, this, [=]() { addOperator('*'); });
     connect(ui->divide, &QPushButton::clicked, this, [=]() { addOperator('/'); });
 
-    // Connect equal button to the evaluateExpression function
     connect(ui->equal, &QPushButton::clicked, this, &MainWindow::evaluateExpression);
     connect(ui->clear, &QPushButton::clicked, this, &MainWindow::clearExpression);
 }
@@ -40,10 +37,10 @@ MainWindow::~MainWindow()
 void MainWindow::addDigit(int digit)
 {
     QString currentText = ui->lineEdit->text();
-    currentText += QString::number(digit);  // Append digit to display
+    currentText += QString::number(digit); 
     ui->lineEdit->setText(currentText);
 
-    numberStack.push(digit); // Add digit to number stack
+    numberStack.push(digit); 
 }
 
 void MainWindow::clearExpression()
@@ -54,10 +51,10 @@ void MainWindow::clearExpression()
 void MainWindow::addOperator(QChar op)
 {
     QString currentText = ui->lineEdit->text();
-    currentText += op;  // Append operator to display
+    currentText += op; 
     ui->lineEdit->setText(currentText);
 
-    operatorStack.push(op); // Add operator to operator stack
+    operatorStack.push(op); 
 }
 
 double MainWindow::performOperation(double a, double b, QChar op)
@@ -66,7 +63,7 @@ double MainWindow::performOperation(double a, double b, QChar op)
     case '+': return a + b;
     case '-': return a - b;
     case '*': return a * b;
-    case '/': return (b != 0) ? a / b : 0; // Handle division by zero
+    case '/': return (b != 0) ? a / b : 0; 
     default: return 0;
     }
 }
@@ -81,8 +78,8 @@ void MainWindow::evaluateExpression()
         QChar op = operatorStack.pop();
 
         result = performOperation(a, b, op);
-        numberStack.push(result); // Push result back for further evaluation if needed
+        numberStack.push(result); 
     }
 
-    ui->lineEdit->setText(QString::number(result)); // Display the result
+    ui->lineEdit->setText(QString::number(result)); 
 }
