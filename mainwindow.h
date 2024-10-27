@@ -30,4 +30,4 @@ private:
     double performOperation(double a, double b, QChar op);
 };
 
-#endif // MAINWINDOW_H
+#endif 
